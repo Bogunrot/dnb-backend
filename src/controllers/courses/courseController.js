@@ -107,7 +107,7 @@ export const getCourses = async (req, res) => {
       "createdBy",
       "name email avatar"
     );
-    res.status(200).json({ success: true, courses });
+    res.status(200).json({ success: true, data: courses });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
@@ -162,12 +162,7 @@ export const getCoursesByUser = async (req, res) => {
     logger.info("✅ Finding courses...");
     const courses = await Course.find({ createdBy }).populate("createdBy", "name avatar bio");
 
-    if (!courses || courses.length === 0) {
-      return res
-        .status(200)
-        .json({ success: false, message: "No courses found" });
-    }
-    res.status(200).json({ success: true, courses });
+    res.status(200).json({ success: true, data: courses });
   } catch (error) {
     logger.error("❌ Unexpected Error in getCoursesByUser:", error);
     res.status(500).json({ success: false, message: error.message });
