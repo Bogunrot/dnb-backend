@@ -13,7 +13,7 @@ export const searchAll = async (req, res) => {
     
     const result = await searchCollections({ q: q ? q.trim() : "", type, page, limit, sort, filters });
     
-    res.json({ success: true, ...result });
+    res.status(200).json({ success: true, data: result.results, pagination: result.pagination });
   } catch (err) {
     logger.error("Search error:", err);
     res.status(err.statusCode || 500).json({
@@ -34,7 +34,7 @@ export const searchEducatorsHandler = async (req, res) => {
     
     const result = await searchEducators({ q: q ? q.trim() : "", interest, page, limit });
     
-    res.json({ success: true, ...result });
+    res.status(200).json({ success: true, data: result.results, pagination: result.pagination });
   } catch (err) {
     logger.error("Search educators error:", err);
     res.status(500).json({ success: false, error: "Server error" });
