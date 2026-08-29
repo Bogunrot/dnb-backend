@@ -83,6 +83,9 @@ import { versionMiddleware } from "./src/middlewares/versionMiddleware.js";
 // Issue #224 — Developer documentation portal
 import docsRoutes from "./src/routes/docsRoutes.js";
 
+// Issue #173 — Scholarly attribution prevention system
+import attributionRoutes from "./src/routes/attribution/attributionRoutes.js";
+
 const app = express();
 
 app.set("trust proxy", 1);
@@ -282,6 +285,9 @@ app.use("/docs", docsRoutes);
 
 // Start the hourly trending-hashtag score job (Issue #212).
 startTrendingHashtagsJob();
+
+// Issue #173 — Scholarly attribution prevention system.
+app.use("/api/attribution", generousLimiter, attributionRoutes);
 
 // ======================
 // ERROR HANDLING
